@@ -3,7 +3,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Mei Wong Software Developer</title>
+		<title>Mei Wong — Demo Portfolio</title>
+		<link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+		<meta property="og:title" content="Mei Wong — Demo Portfolio">
+		<meta property="og:description" content="Demo portfolio for Mei Wong — a Bootstrap-based demo site showcasing layout, theme toggle, and client-side features.">
+		<meta property="og:image" content="assets/images/og-image.svg">
+		<meta name="twitter:card" content="summary_large_image">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="assets/css/style.css">
 
@@ -11,18 +16,18 @@
 		<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
-			"@graph": [
+				"@graph": [
 				{
 					"@type": "Person",
 					"name": "Mei Wong",
 					"jobTitle": "Software Developer",
-					"url": "https://example.com",
+					"url": "https://u22n.github.io/Mei-portfolio-project",
 					"sameAs": []
 				},
 				{
 					"@type": "WebSite",
-					"url": "https://example.com",
-					"name": "Mei Wong — Portfolio",
+					"url": "https://u22n.github.io/Mei-portfolio-project",
+					"name": "Mei Wong — Demo Portfolio",
 					"author": { "@type": "Person", "name": "Mei Wong" }
 				}
 			]
@@ -161,10 +166,23 @@
 						      </div>
 						      <div class="modal-body">
 						        <p>We use anonymous analytics to improve this demo site. You can allow or deny analytics. No tracking will occur unless you opt in.</p>
-						        <div class="form-check">
-						          <input class="form-check-input" type="checkbox" value="" id="analyticsEnable">
-						          <label class="form-check-label" for="analyticsEnable">Enable anonymous analytics (Plausible)</label>
-						        </div>
+												<div class="mb-3">
+													<label class="form-label">Analytics provider</label>
+													<div class="btn-group d-flex" role="group" aria-label="Select analytics provider">
+														<input type="radio" class="btn-check" name="analyticsProvider" id="providerNone" autocomplete="off" value="none" checked>
+														<label class="btn btn-outline-secondary" for="providerNone">None</label>
+
+														<input type="radio" class="btn-check" name="analyticsProvider" id="providerPlausible" autocomplete="off" value="plausible">
+														<label class="btn btn-outline-secondary" for="providerPlausible">Plausible</label>
+
+														<input type="radio" class="btn-check" name="analyticsProvider" id="providerUmami" autocomplete="off" value="umami">
+														<label class="btn btn-outline-secondary" for="providerUmami">Umami</label>
+
+														<input type="radio" class="btn-check" name="analyticsProvider" id="providerBoth" autocomplete="off" value="both">
+														<label class="btn btn-outline-secondary" for="providerBoth">Both</label>
+													</div>
+													<div class="form-text mt-2">Umami is typically self-hosted — replace the placeholder Umami URL and website id in the script below before using it on a production site.</div>
+												</div>
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -252,7 +270,7 @@
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
-		        <p>Join my newsletter for the latest updates on my projects, coding tips, and industry insights delivered straight to your inbox.</p>
+						<p>Join my newsletter for demo updates, design experiments and notes about the projects showcased here. This is a demonstration subscription form and does not send real mail.</p>
 				<form class="row g-3 sharp-corners">
 		          <div class="col-12 col-md-6">
 		            <label for="subFullName" class="form-label">Full name</label>
@@ -272,9 +290,9 @@
 		</div>
 
 		<!-- Small site footer -->
-		<div class="text-center py-3">
-			<small>&copy; 2025 Mei Wong — Demo portfolio</small>
-		</div>
+			<div class="text-center py-3">
+				<small>&copy; 2025 Mei Wong — Demo portfolio. This is a demonstration site for showcasing design and functionality only.</small>
+			</div>
 
 				<!-- Resume preview modal -->
 				<div class="modal fade" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
@@ -295,7 +313,7 @@
 											<p class="muted resume-role">Software Developer</p>
 										</div>
 										<div class="col-4 text-end">
-											<p>Email: <span id="previewEmail">mei@example.com</span> <button class="btn btn-sm btn-outline-secondary ms-2" id="copyEmail" title="Copy email">Copy</button></p>
+											<p>Email: <span id="previewEmail">mei@meiwong.demo</span> <button class="btn btn-sm btn-outline-secondary ms-2" id="copyEmail" title="Copy email">Copy</button></p>
 											<p>Phone: <span id="previewPhone">(555) 123-4567</span> <button class="btn btn-sm btn-outline-secondary ms-2" id="copyPhone" title="Copy phone">Copy</button></p>
 										</div>
 									</div>
@@ -400,29 +418,62 @@
 			const analyticsEnable = document.getElementById('analyticsEnable');
 
 			function loadPlausible(){
-				// Example Plausible snippet; replace data-domain with your domain.
 				if(document.getElementById('plausible-script')) return;
 				const s = document.createElement('script');
 				s.id = 'plausible-script';
 				s.setAttribute('defer','');
-				s.setAttribute('data-domain','example.com');
+				s.setAttribute('data-domain','u22n.github.io'); // GitHub Pages demo domain
 				s.src = 'https://plausible.io/js/plausible.js';
 				document.head.appendChild(s);
 			}
 
-			function saveAnalyticsConsent(allow){
-				localStorage.setItem('analytics_consent', allow ? 'granted' : 'denied');
-				if(allow) loadPlausible();
+			function loadUmami(){
+				if(document.getElementById('umami-script')) return;
+				const s = document.createElement('script');
+				s.id = 'umami-script';
+				s.defer = true;
+				// NOTE: Umami is typically self-hosted. Replace the URL and website id below with your Umami instance details.
+				s.src = 'https://umami.example.com/umami.js';
+				s.setAttribute('data-website-id','YOUR-UMAMI-WEBSITE-ID');
+				document.head.appendChild(s);
+			}
+
+			function loadAnalytics(provider){
+				if(!provider || provider === 'none') return;
+				if(provider === 'plausible' || provider === 'both') loadPlausible();
+				if(provider === 'umami' || provider === 'both') loadUmami();
+			}
+
+			function saveAnalyticsProvider(provider){
+				localStorage.setItem('analytics_provider', provider);
+				const allowed = provider && provider !== 'none';
+				localStorage.setItem('analytics_consent', allowed ? 'granted' : 'denied');
+				if(allowed) loadAnalytics(provider);
 				const toastEl = document.getElementById('consentToast');
 				if(toastEl){ const t = new bootstrap.Toast(toastEl); t.show(); }
 			}
 
 			// on first visit, if consent missing, show modal after small delay
+			const savedProvider = localStorage.getItem('analytics_provider');
 			const consent = localStorage.getItem('analytics_consent');
-			if(consent === 'granted') loadPlausible();
+			if(consent === 'granted' && savedProvider) loadAnalytics(savedProvider);
 			if(!consent && analyticsModal) setTimeout(()=> analyticsModal.show(), 600);
 
-			if(analyticsSave){ analyticsSave.addEventListener('click', ()=>{ saveAnalyticsConsent(!!analyticsEnable.checked); analyticsModal.hide(); }); }
+			if(analyticsSave){ analyticsSave.addEventListener('click', ()=>{
+				// read selected provider radio
+				const radios = document.getElementsByName('analyticsProvider');
+				let sel = 'none';
+				for(const r of radios){ if(r.checked){ sel = r.value; break; } }
+				saveAnalyticsProvider(sel);
+				analyticsModal.hide();
+			});
+			// pre-select saved provider when modal opens
+			analyticsModalEl.addEventListener('shown.bs.modal', ()=>{
+				const saved = localStorage.getItem('analytics_provider') || 'none';
+				const input = document.querySelector(`[name=analyticsProvider][value="${saved}"]`);
+				if(input) input.checked = true;
+			});
+			}
 
 
 					// Resume generator using jsPDF (UMD import)

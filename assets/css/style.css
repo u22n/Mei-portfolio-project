@@ -61,13 +61,22 @@ h1,h2,h3,h4{
 
 /* Hero / header background image and spacing */
 #hero{
-  background-image: url("../images/background.webp");
+  background-image: url("../images/background.svg");
   background-size: cover;
   background-position: center center;
   padding-top: 5rem;
   padding-bottom: 5rem;
   color: var(--heading);
   text-shadow: none;
+}
+
+/* Ensure hero follows dark theme tone when .dark or :root.dark is present
+   — remove the decorative SVG and fall back to the dark page background so
+   the hero matches the rest of the site's dark appearance. */
+:root.dark #hero, .dark #hero{
+  background-image: none !important;
+  background-color: var(--egg-blue) !important;
+  color: var(--heading);
 }
 
 /* Make hero, about and contact headings use accent blue */
