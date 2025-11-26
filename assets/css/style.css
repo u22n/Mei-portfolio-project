@@ -92,3 +92,24 @@ h1,h2,h3,h4{
     min-height: auto;
   }
 }
+
+/* Utility: sharper corners applied site-wide when needed */
+.sharp-corners{
+  border-radius: 0 !important;
+}
+.sharp-corners *{
+  border-radius: 0 !important;
+}
+
+/* Custom mid-blue button used for newsletter, contact and modal */
+.btn-custom{
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+.btn-custom:hover,
+.btn-custom:focus{
+  background-color: #1d6d8a !important;
+  border-color: #1d6d8a !important;
+  color: #ffffff !important;
+}
