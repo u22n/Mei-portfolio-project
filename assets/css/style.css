@@ -213,3 +213,28 @@ h1,h2,h3,h4{
   color: var(--heading);
 }
 .dark .resume-preview .muted, :root.dark .resume-preview .muted{ color: rgba(255,255,255,0.7) }
+
+/* small circular avatar used in the preview and PDF header */
+.resume-avatar{
+  width:88px;
+  height:88px;
+  border-radius:50%;
+  background-image: url('../images/mei-wong.webp');
+  background-position: center center;
+  background-size: cover;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.25);
+  border: 3px solid rgba(255,255,255,0.9);
+}
+.dark .resume-avatar, :root.dark .resume-avatar{ border-color: rgba(255,255,255,0.15) }
+
+/* hero underline for name/role */
+#hero h1, #hero h2{
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
+/* slightly smaller name rendered in modal preview */
+.resume-name{font-size:1.6rem}
+.resume-role{margin-top:0.1rem}
