@@ -404,40 +404,25 @@
 						});
 					}
 
-					// Copy to clipboard for preview contact (shows a small tooltip)
-					const copyEmail = document.getElementById('copyEmail');
-					const copyPhone = document.getElementById('copyPhone');
-
-					function showCopyTooltip(btn, msg = 'Copied'){
-					  const tip = document.createElement('div');
-					  tip.className = 'copy-tooltip';
-					  tip.textContent = msg;
-					  document.body.appendChild(tip);
-
-					  // position near the button
-					  const rect = btn.getBoundingClientRect();
-					  const tipRect = tip.getBoundingClientRect();
-					  const left = Math.max(8, rect.left + (rect.width - tipRect.width)/2);
-					  const top = Math.max(8, rect.top - tipRect.height - 8);
-					  tip.style.left = left + 'px';
-					  tip.style.top = top + 'px';
-
-					  requestAnimationFrame(()=> tip.classList.add('show'));
-					  setTimeout(()=>{ tip.classList.remove('show'); setTimeout(()=> tip.remove(), 220); }, 1100);
-					}
-
-					if(copyEmail){
-						copyEmail.addEventListener('click', async ()=>{
-							const text = document.getElementById('previewEmail').textContent.trim();
-							try{ await navigator.clipboard.writeText(text); showCopyTooltip(copyEmail, 'Email copied'); }catch(e){ showCopyTooltip(copyEmail, 'Error'); }
-						});
-					}
-					if(copyPhone){
-						copyPhone.addEventListener('click', async ()=>{
-							const text = document.getElementById('previewPhone').textContent.trim();
-							try{ await navigator.clipboard.writeText(text); showCopyTooltip(copyPhone, 'Phone copied'); }catch(e){ showCopyTooltip(copyPhone, 'Error'); }
-						});
-					}
+										// Copy to clipboard for preview contact using Bootstrap tooltips
+										const copyEmail = document.getElementById('copyEmail');
+										const copyPhone = document.getElementById('copyPhone');
+										if(window.bootstrap){
+											if(copyEmail){
+												const tipEmail = new bootstrap.Tooltip(copyEmail, {title:'Email copied', trigger:'manual', placement:'top'});
+												copyEmail.addEventListener('click', async ()=>{
+													const text = document.getElementById('previewEmail').textContent.trim();
+													try{ await navigator.clipboard.writeText(text); tipEmail.show(); setTimeout(()=>tipEmail.hide(), 1000); }catch(e){ tipEmail.hide(); }
+												});
+											}
+											if(copyPhone){
+												const tipPhone = new bootstrap.Tooltip(copyPhone, {title:'Phone copied', trigger:'manual', placement:'top'});
+												copyPhone.addEventListener('click', async ()=>{
+													const text = document.getElementById('previewPhone').textContent.trim();
+													try{ await navigator.clipboard.writeText(text); tipPhone.show(); setTimeout(()=>tipPhone.hide(), 1000); }catch(e){ tipPhone.hide(); }
+												});
+											}
+										}
 
                     
 		})();

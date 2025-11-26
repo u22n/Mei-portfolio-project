@@ -261,29 +261,17 @@ html.theme-transition, body.theme-transition{
 .resume-role{margin-top:0.1rem}
 
 /* small copy tooltip (used for copy-to-clipboard feedback) */
-.copy-tooltip{
-  position: fixed;
-  z-index: 2200;
-  background: rgba(17,24,39,0.92);
-  color: #fff;
-  padding: 6px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  box-shadow: 0 6px 18px rgba(16,24,40,0.35);
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity .16s ease, transform .16s ease;
-}
-.copy-tooltip.show{ opacity: 1; transform: translateY(0); }
-
 /* make the modal close 'X' lighter in dark mode so it's visible */
 .dark .modal .btn-close, :root.dark .modal .btn-close{
   filter: invert(1) brightness(1.6) contrast(1.1);
   opacity: 0.95;
 }
 
-/* Demo card tweaks (removed demo widgets) */
+/* navbar link hover and brand polish */
+.navbar .nav-link{ transition: color .18s ease, transform .12s ease; }
+.navbar .nav-link:hover, .navbar .nav-link:focus{ color: var(--accent) !important; transform: translateY(-2px); }
+.navbar-brand{ font-family: 'DM Serif Display', serif; font-weight:700; color:var(--accent); font-size:1.25rem; letter-spacing:0.5px }
+.navbar-brand:hover{ text-decoration:none; transform:translateY(-1px); }
 
 /* Hero animation */
 .fade-up{opacity:0; transform: translateY(12px); animation: fadeUp .65s ease forwards}
