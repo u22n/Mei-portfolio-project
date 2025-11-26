@@ -1,28 +1,42 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (official flow)
 
 on:
   push:
     branches: [ main ]
 
+permissions:
+  pages: write
+  id-token: write
+  contents: read
+
 jobs:
-  build-and-deploy:
+  build:
+    name: Build static site (no-op)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js (optional)
+      - name: Setup Node (optional)
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Install (no-op for static site)
-        run: echo "No build step required for this static demo; add your build commands here if needed"
+      - name: Install (no-op)
+        run: echo "No build step required for this static demo. Add your build commands here if you need one."
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          path: ./
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy
+        uses: actions/deploy-pages@v1
