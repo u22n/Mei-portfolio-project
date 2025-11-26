@@ -26,7 +26,8 @@ jobs:
         run: echo "No build step required for this static demo. Add your build commands here if you need one."
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        # Use v2 which depends on the supported upload-artifact v4
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./
 
