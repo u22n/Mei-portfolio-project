@@ -1,11 +1,4 @@
-/*
-  Palette
-  egg-blue: #eaf6f4
-  heading: #111827
-  text: #374151
-
-  Fonts: DM Serif Display (headings), Poppins (body)
-*/
+ 
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@300;400;600;700&display=swap');
 
@@ -13,20 +6,16 @@
   --egg-blue: #cfeef6;
   --heading: #111827;
   --accent: #2b6cb0;
-  /* darker default body text so content reads stronger against white areas */
   --text: #0f1724;
 }
 
-/* Dark theme vars */
 :root.dark{
-  --egg-blue: #071427; /* body bg in dark mode */
+  --egg-blue: #071427;
   --heading: #e6f3f7;
   --accent: #1d6d8a;
-  /* slightly darker than before so text isn't washed-out on dark pages */
   --text: #9fb7c1;
 }
 
-/* Global styles */
 html,body{
   height:100%;
 }
@@ -36,7 +25,6 @@ body{
   color: var(--text);
 }
 
-/* Ensure common content elements inherit the variable-driven text color */
 p, label, .card-text, li, a, .lead{
   color: var(--text);
 }
@@ -46,20 +34,16 @@ h1,h2,h3,h4{
   color: var(--heading);
 }
 
-/* Sections background overrides */
 #about, #portfolio, #contact{
   background-color: #ffffff;
 }
 
-/* In dark mode, make the main content sections follow the dark page tone
-   so the site feels consistently dark (not just the page edges). */
 :root.dark #about, .dark #about,
 :root.dark #portfolio, .dark #portfolio,
 :root.dark #contact, .dark #contact{
   background-color: var(--egg-blue);
 }
 
-/* Hero / header background image and spacing */
 #hero{
   background-image: url("../images/background.svg");
   background-size: cover;
@@ -70,23 +54,18 @@ h1,h2,h3,h4{
   text-shadow: none;
 }
 
-/* Ensure hero follows dark theme tone when .dark or :root.dark is present
-   — remove the decorative SVG and fall back to the dark page background so
-   the hero matches the rest of the site's dark appearance. */
 :root.dark #hero, .dark #hero{
   background-image: none !important;
   background-color: var(--egg-blue) !important;
   color: var(--heading);
 }
 
-/* Make hero, about and contact headings use accent blue */
 #hero h1, #hero h2,
 #about .display-5,
 #contact .display-5 {
   color: var(--accent);
 }
 
-/* Theme toggle button */
 .theme-toggle{
   display:inline-flex;
   align-items:center;
@@ -102,15 +81,12 @@ h1,h2,h3,h4{
 :root.dark .theme-toggle .sun{transform: rotate(20deg); opacity:0}
 :root.dark .theme-toggle .moon{transform: rotate(0deg); opacity:1}
 
-/* Slight button transition */
 .btn-custom{transition: background-color .2s ease, border-color .2s ease}
 
-/* Theme transition animation helper */
 html.theme-transition, body.theme-transition{
   transition: background-color 350ms ease, color 350ms ease;
 }
 
-/* Navbar and footer adjustments for dark mode */
 .navbar{transition: background-color .25s ease, color .25s ease}
 .dark .navbar, :root.dark .navbar{
   background-color: rgba(10,20,30,0.95) !important;
@@ -126,17 +102,7 @@ html.theme-transition, body.theme-transition{
   color: #cbd5e1;
 }
 
-/* Dark-mode specific control/card styling for better contrast
-
-   Notes:
-   - Use both `.dark` (applied to `html` or `body`) and `:root.dark` selectors
-     so rules apply regardless of whether the JS toggles the class on <html>
-     or another root element.
-   - Make box backgrounds visibly darker (dark-gray overlays) so the
-     white form placeholders and labels remain readable against them.
-*/
-
-/* cards, modals: darker, slightly translucent gray */
+ 
 :root.dark .card, .dark .card,
 :root.dark .card-body, .dark .card-body,
 :root.dark .modal-content, .dark .modal-content{
@@ -147,7 +113,6 @@ html.theme-transition, body.theme-transition{
 
 :root.dark .card .card-title, .dark .card .card-title{ color: var(--accent) }
 
-/* form controls: darkened but slightly lighter than card surface */
 :root.dark .form-control, .dark .form-control,
 :root.dark .form-select, .dark .form-select,
 :root.dark textarea.form-control, .dark textarea.form-control{
@@ -156,32 +121,26 @@ html.theme-transition, body.theme-transition{
   border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* placeholders need to be readable on darker form backgrounds */
 :root.dark .form-control::placeholder, .dark .form-control::placeholder{
   color: rgba(255,255,255,0.7);
 }
 
-/* outline buttons in the navbar/modal when dark */
 :root.dark .btn-outline-secondary, .dark .btn-outline-secondary{
   color: var(--text);
   border-color: rgba(255,255,255,0.08);
 }
 
-/* Improve readability of hero headings on small screens */
 #hero .display-4{font-size:2.5rem}
 
 @media(min-width:768px){
   #hero .display-4{font-size:3.5rem}
 }
 
-/* Portfolio customisations */
-/* Target only card titles inside the #portfolio section */
 #portfolio .card-title{
   color: var(--accent);
   font-size: 1.2rem;
 }
 
-/* Style portfolio buttons specifically (use the variation class for specificity) */
 #portfolio .btn-outline-secondary{
   background-color: rgba(0,0,0,0.03);
   border-color: rgba(0,0,0,0.08);
@@ -194,19 +153,16 @@ html.theme-transition, body.theme-transition{
   color: #ffffff;
 }
 
-/* Ensure card text blocks are consistent height across md/lg */
 #portfolio .card-text{
   min-height: 120px;
 }
 
-/* Disable the min-height on extra-large screens to avoid excessive spacing */
 @media (min-width: 1200px){
   #portfolio .card-text{
     min-height: auto;
   }
 }
 
-/* Utility: sharper corners applied site-wide when needed */
 .sharp-corners{
   border-radius: 0 !important;
 }
@@ -214,7 +170,6 @@ html.theme-transition, body.theme-transition{
   border-radius: 0 !important;
 }
 
-/* Custom mid-blue button used for newsletter, contact and modal */
 .btn-custom{
   background-color: var(--accent) !important;
   border-color: var(--accent) !important;
@@ -227,7 +182,6 @@ html.theme-transition, body.theme-transition{
   color: #ffffff !important;
 }
 
-/* Resume preview styling inside modal */
 .resume-preview{
   background-color: #ffffff;
   color: #0f1724;
@@ -237,19 +191,16 @@ html.theme-transition, body.theme-transition{
 .resume-preview h2{font-family: 'DM Serif Display', serif; margin-bottom:0}
 .resume-preview .muted{color: #6b7280}
 
-/* Dark mode: preview should adapt and remain readable */
 .dark .resume-preview, :root.dark .resume-preview{
   background-color: rgba(0,0,0,0.55);
   color: var(--heading);
 }
 .dark .resume-preview .muted, :root.dark .resume-preview .muted{ color: rgba(255,255,255,0.7) }
 
-/* Improve contrast for small helper text inside modals in dark mode */
 .dark .modal .form-text, :root.dark .modal .form-text{
   color: rgba(255,255,255,0.88);
 }
 
-/* small circular avatar used in the preview and PDF header */
 .resume-avatar{
   width:88px;
   height:88px;
@@ -262,7 +213,6 @@ html.theme-transition, body.theme-transition{
 }
 .dark .resume-avatar, :root.dark .resume-avatar{ border-color: rgba(255,255,255,0.15) }
 
-/* hero underline for name/role */
 #hero h1, #hero h2{
   text-decoration: underline;
   text-decoration-color: var(--accent);
@@ -270,28 +220,22 @@ html.theme-transition, body.theme-transition{
   text-underline-offset: 6px;
 }
 
-/* slightly smaller name rendered in modal preview */
 .resume-name{font-size:1.6rem}
 .resume-role{margin-top:0.1rem}
 
-/* small copy tooltip (used for copy-to-clipboard feedback) */
-/* make the modal close 'X' lighter in dark mode so it's visible */
 .dark .modal .btn-close, :root.dark .modal .btn-close{
   filter: invert(1) brightness(1.6) contrast(1.1);
   opacity: 0.95;
 }
 
-/* navbar link hover and brand polish */
 .navbar .nav-link{ transition: color .18s ease, transform .12s ease; }
 .navbar .nav-link:hover, .navbar .nav-link:focus{ color: var(--accent) !important; transform: translateY(-2px); }
 .navbar-brand{ font-family: 'DM Serif Display', serif; font-weight:700; color:var(--accent); font-size:1.25rem; letter-spacing:0.5px }
 .navbar-brand:hover{ text-decoration:none; transform:translateY(-1px); }
 
-/* brand mark styling */
 .brand-mark svg{ display:block }
 .brand-text{ display:inline-block }
 
-/* sticky/shrink navbar on scroll */
 .navbar.sticky{ position:fixed; top:0; left:0; right:0; z-index:1035; box-shadow: 0 6px 18px rgba(2,6,23,0.25); background-color: rgba(255,255,255,0.98); }
 .dark .navbar.sticky, :root.dark .navbar.sticky{ background-color: rgba(6,12,20,0.95) !important; }
 .navbar.sticky .navbar-brand{ transform: translateY(0); }
@@ -299,23 +243,18 @@ html.theme-transition, body.theme-transition{
 .navbar{ padding-top: .8rem; padding-bottom: .8rem; transition: padding .18s ease, background-color .18s ease }
 .navbar.navbar-shrink .brand-text{ font-size:1.05rem }
 
-/* ensure content doesn't jump when navbar becomes fixed; JS will toggle body padding */
-
-/* Hero animation */
+ 
 .fade-up{opacity:0; transform: translateY(12px); animation: fadeUp .65s ease forwards}
 .fade-up.delay-1{animation-delay: .12s}
 .fade-up.delay-2{animation-delay: .22s}
 .fade-up.delay-3{animation-delay: .32s}
 @keyframes fadeUp{ to { opacity:1; transform: translateY(0);} }
 
-/* nav link animated underline for active section */
 .navbar .nav-link{ position: relative; padding-bottom: .5rem; }
 .navbar .nav-link::after{ content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: var(--accent); border-radius: 3px; transition: width .22s ease; }
 .navbar .nav-link:hover::after, .navbar .nav-link.active::after{ width: 100%; }
 
-/* brand mark entrance animation (subtle rotate + fade) */
 .brand-mark svg{ opacity: 0; transform: rotate(-8deg) translateY(-6px) scale(.96); transition: transform .5s cubic-bezier(.2,.9,.2,1), opacity .5s ease; }
 .brand-mark.animate svg{ opacity: 1; transform: rotate(0deg) translateY(0) scale(1); }
 
-/* cookie consent toast placement tweaks */
 .toast-consent{ position: fixed; right: 1rem; bottom: 1rem; z-index: 2147483647; }
