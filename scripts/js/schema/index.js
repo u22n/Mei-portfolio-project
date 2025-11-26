@@ -1,4 +1,5 @@
 (function(){
+  const now = new Date().toISOString();
   const ld = {
     "@context": "https://schema.org",
     "@graph": [
@@ -14,6 +15,13 @@
         "url": "https://u22n.github.io/Mei-portfolio-project",
         "name": "Mei Wong — Demo Portfolio",
         "author": { "@type": "Person", "name": "Mei Wong" }
+      },
+      {
+        "@type": "WebPage",
+        "url": "https://u22n.github.io/Mei-portfolio-project",
+        "name": "Mei Wong — Demo Portfolio",
+        "datePublished": now,
+        "dateModified": now
       }
     ]
   };
