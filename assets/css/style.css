@@ -293,3 +293,15 @@ html.theme-transition, body.theme-transition{
 .fade-up.delay-2{animation-delay: .22s}
 .fade-up.delay-3{animation-delay: .32s}
 @keyframes fadeUp{ to { opacity:1; transform: translateY(0);} }
+
+/* nav link animated underline for active section */
+.navbar .nav-link{ position: relative; padding-bottom: .5rem; }
+.navbar .nav-link::after{ content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: var(--accent); border-radius: 3px; transition: width .22s ease; }
+.navbar .nav-link:hover::after, .navbar .nav-link.active::after{ width: 100%; }
+
+/* brand mark entrance animation (subtle rotate + fade) */
+.brand-mark svg{ opacity: 0; transform: rotate(-8deg) translateY(-6px) scale(.96); transition: transform .5s cubic-bezier(.2,.9,.2,1), opacity .5s ease; }
+.brand-mark.animate svg{ opacity: 1; transform: rotate(0deg) translateY(0) scale(1); }
+
+/* cookie consent toast placement tweaks */
+.toast-consent{ position: fixed; right: 1rem; bottom: 1rem; z-index: 2147483647; }

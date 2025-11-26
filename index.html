@@ -6,6 +6,28 @@
 		<title>Mei Wong Software Developer</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="assets/css/style.css">
+
+		<!-- Structured data for SEO -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": "Person",
+					"name": "Mei Wong",
+					"jobTitle": "Software Developer",
+					"url": "https://example.com",
+					"sameAs": []
+				},
+				{
+					"@type": "WebSite",
+					"url": "https://example.com",
+					"name": "Mei Wong — Portfolio",
+					"author": { "@type": "Person", "name": "Mei Wong" }
+				}
+			]
+		}
+		</script>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -127,6 +149,36 @@
 								<p class="card-text">A platform for a dog walking service designed to fit the busy lifestyles of pet owners. Focused on promoting a healthy life for dogs, this site showcases convenient scheduling options and services.</p>
 							</div>
 							</div>
+						</div>
+
+						<!-- Analytics / Cookie consent modal -->
+						<div class="modal fade" id="analyticsModal" tabindex="-1" aria-labelledby="analyticsModalLabel" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered">
+						    <div class="modal-content sharp-corners">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="analyticsModalLabel">Cookie & Analytics Preferences</h5>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						      <div class="modal-body">
+						        <p>We use anonymous analytics to improve this demo site. You can allow or deny analytics. No tracking will occur unless you opt in.</p>
+						        <div class="form-check">
+						          <input class="form-check-input" type="checkbox" value="" id="analyticsEnable">
+						          <label class="form-check-label" for="analyticsEnable">Enable anonymous analytics (Plausible)</label>
+						        </div>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+						        <button id="analyticsSave" type="button" class="btn btn-custom">Save Preferences</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+
+						<!-- Consent toast to confirm action -->
+						<div class="toast toast-consent" id="consentToast" role="status" aria-live="polite" aria-atomic="true">
+						  <div class="toast-body">
+						    Preferences saved.
+						  </div>
 						</div>
 					<div class="col-12 col-md-6">
 						<div class="card h-100 sharp-corners">
@@ -316,6 +368,62 @@
 			localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
 			updateToggleAria();
 		});
+
+			// IntersectionObserver to highlight nav items when sections enter view
+			const sections = document.querySelectorAll('header, section');
+			const navLinks = document.querySelectorAll('.navbar .nav-link');
+			const sectionMap = {};
+			navLinks.forEach(link=>{ const href = link.getAttribute('href'); if(href && href.startsWith('#')) sectionMap[href.slice(1)] = link; });
+
+			const io = new IntersectionObserver((entries)=>{
+				entries.forEach(entry=>{
+					const id = entry.target.id;
+					if(!id) return;
+					const link = sectionMap[id];
+					if(!link) return;
+					if(entry.isIntersecting){
+						navLinks.forEach(l=>l.classList.remove('active'));
+						link.classList.add('active');
+					}
+				});
+			},{ root: null, threshold: 0.55 });
+			sections.forEach(s=> io.observe(s));
+
+			// Brand mark entrance: add animate class after small delay
+			const brandMark = document.querySelector('.brand-mark');
+			if(brandMark) setTimeout(()=> brandMark.classList.add('animate'), 120);
+
+			// Analytics / cookie consent handling
+			const analyticsModalEl = document.getElementById('analyticsModal');
+			const analyticsModal = analyticsModalEl ? new bootstrap.Modal(analyticsModalEl) : null;
+			const analyticsSave = document.getElementById('analyticsSave');
+			const analyticsEnable = document.getElementById('analyticsEnable');
+
+			function loadPlausible(){
+				// Example Plausible snippet; replace data-domain with your domain.
+				if(document.getElementById('plausible-script')) return;
+				const s = document.createElement('script');
+				s.id = 'plausible-script';
+				s.setAttribute('defer','');
+				s.setAttribute('data-domain','example.com');
+				s.src = 'https://plausible.io/js/plausible.js';
+				document.head.appendChild(s);
+			}
+
+			function saveAnalyticsConsent(allow){
+				localStorage.setItem('analytics_consent', allow ? 'granted' : 'denied');
+				if(allow) loadPlausible();
+				const toastEl = document.getElementById('consentToast');
+				if(toastEl){ const t = new bootstrap.Toast(toastEl); t.show(); }
+			}
+
+			// on first visit, if consent missing, show modal after small delay
+			const consent = localStorage.getItem('analytics_consent');
+			if(consent === 'granted') loadPlausible();
+			if(!consent && analyticsModal) setTimeout(()=> analyticsModal.show(), 600);
+
+			if(analyticsSave){ analyticsSave.addEventListener('click', ()=>{ saveAnalyticsConsent(!!analyticsEnable.checked); analyticsModal.hide(); }); }
+
 
 					// Resume generator using jsPDF (UMD import)
 					const { jsPDF } = window.jspdf;
