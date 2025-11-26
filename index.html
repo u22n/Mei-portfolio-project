@@ -29,7 +29,30 @@
 							<a class="nav-link" href="#contact">Contact</a>
 						</li>
 
-					</ul>
+						<li class="nav-item d-flex align-items-center">
+							<button id="downloadResume" class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#resumeModal">Preview Resume</button>
+							<button id="themeToggle" class="btn btn-custom theme-toggle" aria-label="Toggle theme">
+								<!-- sun -->
+								<svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								  <circle cx="12" cy="12" r="4" fill="#fff"/>
+								  <g stroke="#fff" stroke-width="1.2">
+								    <path d="M12 2v2"/>
+								    <path d="M12 20v2"/>
+								    <path d="M2 12h2"/>
+								    <path d="M20 12h2"/>
+								    <path d="M4.9 4.9l1.4 1.4"/>
+								    <path d="M17.7 17.7l1.4 1.4"/>
+								    <path d="M4.9 19.1l1.4-1.4"/>
+								    <path d="M17.7 6.3l1.4-1.4"/>
+								  </g>
+								</svg>
+								<!-- moon -->
+								<svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								  <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="#fff"/>
+								</svg>
+							</button>
+						</li>
+						</ul>
 				</div>
 			</div>
 		</nav>
@@ -192,7 +215,126 @@
 			<small>&copy; 2025 Mei Wong — Demo portfolio</small>
 		</div>
 
+				<!-- Resume preview modal -->
+				<div class="modal fade" id="resumeModal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-scrollable modal-xl modal-lg">
+						<div class="modal-content sharp-corners">
+							<div class="modal-header">
+								<h5 class="modal-title" id="resumeModalLabel">Resume Preview — Mei Wong</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="resume-preview container">
+									<div class="row">
+										<div class="col-8">
+											<h2>Mei Wong</h2>
+											<p class="muted">Software Developer</p>
+										</div>
+										<div class="col-4 text-end">
+											<p>Email: mei@example.com</p>
+											<p>Phone: (555) 123-4567</p>
+										</div>
+									</div>
+
+									<hr />
+
+									<section>
+										<h4>Summary</h4>
+										<p>Passionate software developer with experience building responsive web applications using HTML, CSS, JavaScript and Bootstrap. Strong focus on usability and clean, accessible designs.</p>
+									</section>
+
+									<section>
+										<h4>Experience</h4>
+										<ul>
+											<li><strong>Frontend Developer</strong>, Example Co — 2023–2025<br/>Built responsive client interfaces and improved performance across multiple web properties.</li>
+											<li><strong>Junior Developer</strong>, Example Studio — 2021–2023<br/>Contributed to UI components and assisted with accessibility improvements.</li>
+										</ul>
+									</section>
+
+									<section>
+										<h4>Education</h4>
+										<p>BSc Computer Science — Fictional University</p>
+									</section>
+
+									<section>
+										<h4>Skills</h4>
+										<p>HTML, CSS, JavaScript, Bootstrap, Responsive Design, Accessibility</p>
+									</section>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button id="downloadResumePdf" type="button" class="btn btn-custom">Download PDF</button>
+								<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- jsPDF for client-side resume generation -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script>
+		// Theme toggle + persistence
+		(function(){
+		  const root = document.documentElement;
+		  const toggle = document.getElementById('themeToggle');
+		  const saved = localStorage.getItem('theme');
+		  if(saved === 'dark') root.classList.add('dark');
+		  function updateToggleAria(){
+		    toggle.setAttribute('aria-pressed', root.classList.contains('dark'));
+		  }
+		  updateToggleAria();
+		  toggle.addEventListener('click', ()=>{
+		    root.classList.toggle('dark');
+		    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+		    updateToggleAria();
+		  });
+
+					// Resume generator using jsPDF (UMD import)
+					const { jsPDF } = window.jspdf;
+
+					// Helper to generate the PDF from the same fictional content used in the preview
+					function generateResumePDF(){
+						const doc = new jsPDF({unit:'pt', format:'a4'});
+						doc.setFontSize(22);
+						doc.text('Mei Wong - Resume', 40, 70);
+						doc.setFontSize(12);
+						doc.text('Software Developer', 40, 100);
+						doc.text('Email: mei@example.com | Phone: (555) 123-4567', 40, 120);
+
+						doc.setFontSize(14);
+						doc.text('Summary', 40, 160);
+						doc.setFontSize(11);
+						doc.text('Passionate software developer with experience building responsive web applications using HTML, CSS, JavaScript and Bootstrap. Strong focus on usability and clean, accessible designs.', 40, 180, {maxWidth:510});
+
+						doc.setFontSize(14);
+						doc.text('Experience', 40, 260);
+						doc.setFontSize(11);
+						doc.text('- Frontend Developer, Example Co — 2023–2025. Built responsive client interfaces and improved performance across multiple web properties.', 44, 280, {maxWidth:510});
+						doc.text('- Junior Developer, Example Studio — 2021–2023. Contributed to UI components and assisted with accessibility improvements.', 44, 320, {maxWidth:510});
+
+						doc.setFontSize(14);
+						doc.text('Education', 40, 380);
+						doc.setFontSize(11);
+						doc.text('BSc Computer Science — Fictional University', 44, 400);
+
+						doc.setFontSize(14);
+						doc.text('Skills', 40, 440);
+						doc.setFontSize(11);
+						doc.text('HTML, CSS, JavaScript, Bootstrap, Responsive Design, Accessibility', 44, 460, {maxWidth:510});
+
+						doc.save('Mei-Wong-Resume-2025.pdf');
+					}
+
+					// The navbar button now opens the preview modal; wire the modal's Download button
+					const downloadPdfBtn = document.getElementById('downloadResumePdf');
+					if(downloadPdfBtn){
+						downloadPdfBtn.addEventListener('click', ()=>{
+							generateResumePDF();
+						});
+					}
+		})();
+		</script>
 	</body>
 	</html>
 

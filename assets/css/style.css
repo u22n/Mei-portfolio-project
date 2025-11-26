@@ -196,3 +196,20 @@ h1,h2,h3,h4{
   border-color: #1d6d8a !important;
   color: #ffffff !important;
 }
+
+/* Resume preview styling inside modal */
+.resume-preview{
+  background-color: #ffffff;
+  color: #0f1724;
+  padding: 1.5rem;
+  border-radius: 6px;
+}
+.resume-preview h2{font-family: 'DM Serif Display', serif; margin-bottom:0}
+.resume-preview .muted{color: #6b7280}
+
+/* Dark mode: preview should adapt and remain readable */
+.dark .resume-preview, :root.dark .resume-preview{
+  background-color: rgba(0,0,0,0.55);
+  color: var(--heading);
+}
+.dark .resume-preview .muted, :root.dark .resume-preview .muted{ color: rgba(255,255,255,0.7) }
