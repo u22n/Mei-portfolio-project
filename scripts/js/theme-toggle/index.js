@@ -15,7 +15,6 @@
     toggle.setAttribute('aria-pressed', root.classList.contains('dark'));
   }
 
-  // Initialize theme: prefer URL param, then saved, then system
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   if(paramTheme === 'dark' || (!paramTheme && saved === 'dark')){
     root.classList.add('dark');
@@ -36,7 +35,6 @@
     });
   }
 
-  // Keep scroll restoration manual and reset scroll on load
   if('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0,0);
 
