@@ -66,7 +66,6 @@ The navbar shrinks and changes styling as you scroll down, keeping navigation al
 │   │   └── style.css         # Custom styles, theme variables, animations
 │   └── images/
 │       ├── favicon.svg        # Site icon
-│       ├── og-image.svg       # Open Graph image (for social previews)
 │       ├── og-image.png       # PNG version of OG image
 │       ├── mei-wong.webp      # Profile photo
 │       ├── wags-and-walks.webp
@@ -82,8 +81,6 @@ The navbar shrinks and changes styling as you scroll down, keeping navigation al
 │   │   ├── copy-feedback/index.js     # Clipboard utilities
 │   │   ├── sticky-navbar/index.js     # Navbar scroll behavior
 │   │   └── schema/index.js            # JSON-LD injection
-│   ├── create_og_image.py  # Python script to generate OG PNG (optional)
-│   └── generate_og.py      # Legacy generator (removed)
 └── README.md               # This file
 ```
 
