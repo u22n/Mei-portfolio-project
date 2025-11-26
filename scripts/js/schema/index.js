@@ -21,7 +21,9 @@
         "url": "https://u22n.github.io/Mei-portfolio-project",
         "name": "Mei Wong — Demo Portfolio",
         "datePublished": now,
-        "dateModified": now
+        "dateModified": now,
+        "author": { "@type": "Person", "name": "Mei Wong" },
+        "publisher": { "@type": "Organization", "name": "Mei Wong", "logo": { "@type": "ImageObject", "url": "https://u22n.github.io/Mei-portfolio-project/assets/images/favicon.svg" } }
       }
     ]
   };
