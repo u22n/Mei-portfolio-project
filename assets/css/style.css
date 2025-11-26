@@ -13,7 +13,8 @@
   --egg-blue: #cfeef6;
   --heading: #111827;
   --accent: #2b6cb0;
-  --text: #374151;
+  /* darker default body text so content reads stronger against white areas */
+  --text: #0f1724;
 }
 
 /* Dark theme vars */
@@ -21,7 +22,8 @@
   --egg-blue: #071427; /* body bg in dark mode */
   --heading: #e6f3f7;
   --accent: #1d6d8a;
-  --text: #cbd5e1;
+  /* slightly darker than before so text isn't washed-out on dark pages */
+  --text: #9fb7c1;
 }
 
 /* Global styles */
@@ -34,6 +36,11 @@ body{
   color: var(--text);
 }
 
+/* Ensure common content elements inherit the variable-driven text color */
+p, label, .card-text, li, a, .lead{
+  color: var(--text);
+}
+
 h1,h2,h3,h4{
   font-family: 'DM Serif Display', serif;
   color: var(--heading);
@@ -42,6 +49,14 @@ h1,h2,h3,h4{
 /* Sections background overrides */
 #about, #portfolio, #contact{
   background-color: #ffffff;
+}
+
+/* In dark mode, make the main content sections follow the dark page tone
+   so the site feels consistently dark (not just the page edges). */
+:root.dark #about, .dark #about,
+:root.dark #portfolio, .dark #portfolio,
+:root.dark #contact, .dark #contact{
+  background-color: var(--egg-blue);
 }
 
 /* Hero / header background image and spacing */
