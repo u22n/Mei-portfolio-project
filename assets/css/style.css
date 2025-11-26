@@ -16,6 +16,14 @@
   --text: #374151;
 }
 
+/* Dark theme vars */
+:root.dark{
+  --egg-blue: #071427; /* body bg in dark mode */
+  --heading: #e6f3f7;
+  --accent: #1d6d8a;
+  --text: #cbd5e1;
+}
+
 /* Global styles */
 html,body{
   height:100%;
@@ -52,6 +60,53 @@ h1,h2,h3,h4{
 #about .display-5,
 #contact .display-5 {
   color: var(--accent);
+}
+
+/* Theme toggle button */
+.theme-toggle{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:36px;
+  padding:6px;
+  border-radius:6px;
+}
+.theme-toggle svg{transition: transform .35s ease, opacity .25s ease}
+.theme-toggle .sun{transform: rotate(0deg); opacity:1}
+.theme-toggle .moon{transform: rotate(-20deg); opacity:0}
+:root.dark .theme-toggle .sun{transform: rotate(20deg); opacity:0}
+:root.dark .theme-toggle .moon{transform: rotate(0deg); opacity:1}
+
+/* Slight button transition */
+.btn-custom{transition: background-color .2s ease, border-color .2s ease}
+
+/* Dark-mode specific control/card styling for better contrast */
+:root.dark .card,
+:root.dark .card-body,
+:root.dark .modal-content{
+  background-color: rgba(255,255,255,0.03);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.06);
+}
+
+:root.dark .card .card-title{color: var(--accent)}
+
+:root.dark .form-control,
+:root.dark .form-select,
+:root.dark textarea.form-control{
+  background-color: rgba(255,255,255,0.03);
+  color: var(--heading);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+:root.dark .form-control::placeholder{
+  color: rgba(255,255,255,0.6);
+}
+
+:root.dark .btn-outline-secondary{
+  color: var(--text);
+  border-color: rgba(255,255,255,0.06);
 }
 
 /* Improve readability of hero headings on small screens */
