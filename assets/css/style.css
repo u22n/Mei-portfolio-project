@@ -244,6 +244,11 @@ html.theme-transition, body.theme-transition{
 }
 .dark .resume-preview .muted, :root.dark .resume-preview .muted{ color: rgba(255,255,255,0.7) }
 
+/* Improve contrast for small helper text inside modals in dark mode */
+.dark .modal .form-text, :root.dark .modal .form-text{
+  color: rgba(255,255,255,0.88);
+}
+
 /* small circular avatar used in the preview and PDF header */
 .resume-avatar{
   width:88px;
