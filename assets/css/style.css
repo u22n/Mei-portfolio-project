@@ -12,6 +12,7 @@
 :root{
   --egg-blue: #cfeef6;
   --heading: #111827;
+  --accent: #2b6cb0;
   --text: #374151;
 }
 
@@ -44,6 +45,13 @@ h1,h2,h3,h4{
   padding-bottom: 5rem;
   color: var(--heading);
   text-shadow: none;
+}
+
+/* Make hero, about and contact headings use accent blue */
+#hero h1, #hero h2,
+#about .display-5,
+#contact .display-5 {
+  color: var(--accent);
 }
 
 /* Improve readability of hero headings on small screens */
