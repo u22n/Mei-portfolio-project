@@ -81,32 +81,45 @@ h1,h2,h3,h4{
 /* Slight button transition */
 .btn-custom{transition: background-color .2s ease, border-color .2s ease}
 
-/* Dark-mode specific control/card styling for better contrast */
-:root.dark .card,
-:root.dark .card-body,
-:root.dark .modal-content{
-  background-color: rgba(255,255,255,0.03);
+/* Dark-mode specific control/card styling for better contrast
+
+   Notes:
+   - Use both `.dark` (applied to `html` or `body`) and `:root.dark` selectors
+     so rules apply regardless of whether the JS toggles the class on <html>
+     or another root element.
+   - Make box backgrounds visibly darker (dark-gray overlays) so the
+     white form placeholders and labels remain readable against them.
+*/
+
+/* cards, modals: darker, slightly translucent gray */
+:root.dark .card, .dark .card,
+:root.dark .card-body, .dark .card-body,
+:root.dark .modal-content, .dark .modal-content{
+  background-color: rgba(0,0,0,0.45);
   color: var(--text);
-  border-color: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.08);
 }
 
-:root.dark .card .card-title{color: var(--accent)}
+:root.dark .card .card-title, .dark .card .card-title{ color: var(--accent) }
 
-:root.dark .form-control,
-:root.dark .form-select,
-:root.dark textarea.form-control{
-  background-color: rgba(255,255,255,0.03);
+/* form controls: darkened but slightly lighter than card surface */
+:root.dark .form-control, .dark .form-control,
+:root.dark .form-select, .dark .form-select,
+:root.dark textarea.form-control, .dark textarea.form-control{
+  background-color: rgba(0,0,0,0.35);
   color: var(--heading);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-:root.dark .form-control::placeholder{
-  color: rgba(255,255,255,0.6);
+/* placeholders need to be readable on darker form backgrounds */
+:root.dark .form-control::placeholder, .dark .form-control::placeholder{
+  color: rgba(255,255,255,0.7);
 }
 
-:root.dark .btn-outline-secondary{
+/* outline buttons in the navbar/modal when dark */
+:root.dark .btn-outline-secondary, .dark .btn-outline-secondary{
   color: var(--text);
-  border-color: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.08);
 }
 
 /* Improve readability of hero headings on small screens */
