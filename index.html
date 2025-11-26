@@ -10,7 +10,16 @@
 	<body>
 		<nav class="navbar navbar-expand-sm navbar-light bg-light">
 			<div class="container">
-				<a class="navbar-brand" href="index.html">Mei Wong</a>
+								<a class="navbar-brand d-flex align-items-center" href="index.html">
+									<!-- Monogram mark: simple MW inside a circle -->
+									<span class="brand-mark me-2" aria-hidden="true">
+										<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mei Wong logo">
+											<circle cx="18" cy="18" r="17" fill="var(--accent)"/>
+											<text x="18" y="22" text-anchor="middle" font-family="DM Serif Display, serif" font-size="14" fill="#ffffff">MW</text>
+										</svg>
+									</span>
+									<span class="brand-text">Mei Wong</span>
+								</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -423,6 +432,35 @@
 												});
 											}
 										}
+
+										// Ensure page starts at top on reload (prevent browser restoring scroll)
+										if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+										window.scrollTo(0,0);
+
+										// Sticky/shrink navbar on scroll
+										const navbar = document.querySelector('.navbar');
+										const SCROLL_THRESHOLD = 80;
+										function updateNavbar(){
+											if(window.scrollY > SCROLL_THRESHOLD){
+												if(!navbar.classList.contains('sticky')){
+													navbar.classList.add('sticky');
+												}
+												if(!navbar.classList.contains('navbar-shrink')){
+													navbar.classList.add('navbar-shrink');
+													// add body padding equal to navbar height to avoid content jump
+													document.body.style.paddingTop = navbar.offsetHeight + 'px';
+												}
+											}else{
+												if(navbar.classList.contains('sticky')) navbar.classList.remove('sticky');
+												if(navbar.classList.contains('navbar-shrink')){
+													navbar.classList.remove('navbar-shrink');
+													document.body.style.paddingTop = null;
+												}
+											}
+										}
+										window.addEventListener('scroll', updateNavbar, {passive:true});
+										// run once to set initial state
+										updateNavbar();
 
                     
 		})();

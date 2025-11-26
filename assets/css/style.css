@@ -273,6 +273,20 @@ html.theme-transition, body.theme-transition{
 .navbar-brand{ font-family: 'DM Serif Display', serif; font-weight:700; color:var(--accent); font-size:1.25rem; letter-spacing:0.5px }
 .navbar-brand:hover{ text-decoration:none; transform:translateY(-1px); }
 
+/* brand mark styling */
+.brand-mark svg{ display:block }
+.brand-text{ display:inline-block }
+
+/* sticky/shrink navbar on scroll */
+.navbar.sticky{ position:fixed; top:0; left:0; right:0; z-index:1035; box-shadow: 0 6px 18px rgba(2,6,23,0.25); background-color: rgba(255,255,255,0.98); }
+.dark .navbar.sticky, :root.dark .navbar.sticky{ background-color: rgba(6,12,20,0.95) !important; }
+.navbar.sticky .navbar-brand{ transform: translateY(0); }
+.navbar.navbar-shrink{ padding-top: .25rem; padding-bottom: .25rem; transition: padding .18s ease, background-color .18s ease }
+.navbar{ padding-top: .8rem; padding-bottom: .8rem; transition: padding .18s ease, background-color .18s ease }
+.navbar.navbar-shrink .brand-text{ font-size:1.05rem }
+
+/* ensure content doesn't jump when navbar becomes fixed; JS will toggle body padding */
+
 /* Hero animation */
 .fade-up{opacity:0; transform: translateY(12px); animation: fadeUp .65s ease forwards}
 .fade-up.delay-1{animation-delay: .12s}
