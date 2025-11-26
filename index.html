@@ -156,48 +156,7 @@
 							</div>
 						</div>
 
-						<!-- Analytics / Cookie consent modal -->
-						<div class="modal fade" id="analyticsModal" tabindex="-1" aria-labelledby="analyticsModalLabel" aria-hidden="true">
-						  <div class="modal-dialog modal-dialog-centered">
-						    <div class="modal-content sharp-corners">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="analyticsModalLabel">Cookie & Analytics Preferences</h5>
-						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						      </div>
-						      <div class="modal-body">
-						        <p>We use anonymous analytics to improve this demo site. You can allow or deny analytics. No tracking will occur unless you opt in.</p>
-												<div class="mb-3">
-													<label class="form-label">Analytics provider</label>
-													<div class="btn-group d-flex" role="group" aria-label="Select analytics provider">
-														<input type="radio" class="btn-check" name="analyticsProvider" id="providerNone" autocomplete="off" value="none" checked>
-														<label class="btn btn-outline-secondary" for="providerNone">None</label>
 
-														<input type="radio" class="btn-check" name="analyticsProvider" id="providerPlausible" autocomplete="off" value="plausible">
-														<label class="btn btn-outline-secondary" for="providerPlausible">Plausible</label>
-
-														<input type="radio" class="btn-check" name="analyticsProvider" id="providerUmami" autocomplete="off" value="umami">
-														<label class="btn btn-outline-secondary" for="providerUmami">Umami</label>
-
-														<input type="radio" class="btn-check" name="analyticsProvider" id="providerBoth" autocomplete="off" value="both">
-														<label class="btn btn-outline-secondary" for="providerBoth">Both</label>
-													</div>
-													  <div class="form-text mt-2">Umami is typically self-hosted — keep this option only if you operate your own Umami instance. For GitHub Pages demo sites we recommend using Plausible or selecting <strong>None</strong>. If you plan to enable Umami, replace the Umami script URL and <code>data-website-id</code> below before enabling it.</div>
-												</div>
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-						        <button id="analyticsSave" type="button" class="btn btn-custom">Save Preferences</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-
-						<!-- Consent toast to confirm action -->
-						<div class="toast toast-consent" id="consentToast" role="status" aria-live="polite" aria-atomic="true">
-						  <div class="toast-body">
-						    Preferences saved.
-						  </div>
-						</div>
 					<div class="col-12 col-md-6">
 						<div class="card h-100 sharp-corners">
 							<img src="assets/images/we-wellness.webp" class="card-img-top" alt="A spa with candles towels and natural material">
@@ -411,69 +370,7 @@
 			const brandMark = document.querySelector('.brand-mark');
 			if(brandMark) setTimeout(()=> brandMark.classList.add('animate'), 120);
 
-			// Analytics / cookie consent handling
-			const analyticsModalEl = document.getElementById('analyticsModal');
-			const analyticsModal = analyticsModalEl ? new bootstrap.Modal(analyticsModalEl) : null;
-			const analyticsSave = document.getElementById('analyticsSave');
-			const analyticsEnable = document.getElementById('analyticsEnable');
 
-			function loadPlausible(){
-				if(document.getElementById('plausible-script')) return;
-				const s = document.createElement('script');
-				s.id = 'plausible-script';
-				s.setAttribute('defer','');
-				s.setAttribute('data-domain','u22n.github.io'); // GitHub Pages demo domain
-				s.src = 'https://plausible.io/js/plausible.js';
-				document.head.appendChild(s);
-			}
-
-			function loadUmami(){
-				if(document.getElementById('umami-script')) return;
-				const s = document.createElement('script');
-				s.id = 'umami-script';
-				s.defer = true;
-				// NOTE: Umami is typically self-hosted. Replace the URL and website id below with your Umami instance details.
-				s.src = 'https://umami.example.com/umami.js';
-				s.setAttribute('data-website-id','YOUR-UMAMI-WEBSITE-ID');
-				document.head.appendChild(s);
-			}
-
-			function loadAnalytics(provider){
-				if(!provider || provider === 'none') return;
-				if(provider === 'plausible' || provider === 'both') loadPlausible();
-				if(provider === 'umami' || provider === 'both') loadUmami();
-			}
-
-			function saveAnalyticsProvider(provider){
-				localStorage.setItem('analytics_provider', provider);
-				const allowed = provider && provider !== 'none';
-				localStorage.setItem('analytics_consent', allowed ? 'granted' : 'denied');
-				if(allowed) loadAnalytics(provider);
-				const toastEl = document.getElementById('consentToast');
-				if(toastEl){ const t = new bootstrap.Toast(toastEl); t.show(); }
-			}
-
-			// on first visit, if consent missing, show modal after small delay
-			const savedProvider = localStorage.getItem('analytics_provider');
-			const consent = localStorage.getItem('analytics_consent');
-			if(consent === 'granted' && savedProvider) loadAnalytics(savedProvider);
-			if(!consent && analyticsModal) setTimeout(()=> analyticsModal.show(), 600);
-
-			if(analyticsSave){ analyticsSave.addEventListener('click', ()=>{
-				// read selected provider radio
-				const radios = document.getElementsByName('analyticsProvider');
-				let sel = 'none';
-				for(const r of radios){ if(r.checked){ sel = r.value; break; } }
-				saveAnalyticsProvider(sel);
-				analyticsModal.hide();
-			});
-			// pre-select saved provider when modal opens
-			analyticsModalEl.addEventListener('shown.bs.modal', ()=>{
-				const saved = localStorage.getItem('analytics_provider') || 'none';
-				const input = document.querySelector(`[name=analyticsProvider][value="${saved}"]`);
-				if(input) input.checked = true;
-			});
-			}
 
 
 					// Resume generator using jsPDF (UMD import)
