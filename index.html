@@ -58,22 +58,22 @@
 		</nav>
 		<header id="hero" class="container">
 			<section class="row">
-				<div class="col-12 text-center">
-					<h1 class="display-4 my-4">Mei Wong</h1>
-					<h2 class="display-6 mb-5">Software Developer</h2>
-					<p>
-						Hello! I'm Mei, a
-						<strong>passionate and creative Software Developer</strong>
-						dedicated to building engaging, user-friendly websites and
-						applications. With a keen eye for design and a love for coding,
-						<strong>I translate complex ideas into smooth, accessible digital
-							experiences.</strong>
-						Eager to collaborate and grow, I'm on the lookout for opportunities
-						to innovate and excel.
-					</p>
-					<p class="lead mb-5">Let's create something amazing together!</p>
-					<button type="button" class="btn btn-custom sharp-corners" data-bs-toggle="modal" data-bs-target="#subscribeModal">Subscribe</button>
-				</div>
+										<div class="col-12 text-center">
+											<h1 class="display-4 my-4 fade-up delay-1">Mei Wong</h1>
+											<h2 class="display-6 mb-5 fade-up delay-2">Software Developer</h2>
+											<p class="fade-up delay-3">
+												Hello! I'm Mei, a
+												<strong>passionate and creative Software Developer</strong>
+												dedicated to building engaging, user-friendly websites and
+												applications. With a keen eye for design and a love for coding,
+												<strong>I translate complex ideas into smooth, accessible digital
+													experiences.</strong>
+												Eager to collaborate and grow, I'm on the lookout for opportunities
+												to innovate and excel.
+											</p>
+											<p class="lead mb-5 fade-up delay-3">Let's create something amazing together!</p>
+											<button type="button" class="btn btn-custom sharp-corners fade-up delay-3" data-bs-toggle="modal" data-bs-target="#subscribeModal">Subscribe</button>
+										</div>
 			</section>
 		</header>
 
@@ -234,8 +234,8 @@
 											<p class="muted resume-role">Software Developer</p>
 										</div>
 										<div class="col-4 text-end">
-											<p>Email: mei@example.com</p>
-											<p>Phone: (555) 123-4567</p>
+											<p>Email: <span id="previewEmail">mei@example.com</span> <button class="btn btn-sm btn-outline-secondary ms-2" id="copyEmail" title="Copy email">Copy</button></p>
+											<p>Phone: <span id="previewPhone">(555) 123-4567</span> <button class="btn btn-sm btn-outline-secondary ms-2" id="copyPhone" title="Copy phone">Copy</button></p>
 										</div>
 									</div>
 
@@ -273,25 +273,40 @@
 					</div>
 				</div>
 
+
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 		<!-- jsPDF for client-side resume generation -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 		<script>
 		// Theme toggle + persistence
 		(function(){
-		  const root = document.documentElement;
-		  const toggle = document.getElementById('themeToggle');
-		  const saved = localStorage.getItem('theme');
-		  if(saved === 'dark') root.classList.add('dark');
-		  function updateToggleAria(){
-		    toggle.setAttribute('aria-pressed', root.classList.contains('dark'));
-		  }
-		  updateToggleAria();
-		  toggle.addEventListener('click', ()=>{
-		    root.classList.toggle('dark');
-		    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
-		    updateToggleAria();
-		  });
+		const root = document.documentElement;
+		const toggle = document.getElementById('themeToggle');
+		// theme: preference from URL (?theme=dark|light) -> localStorage -> system
+		const params = new URLSearchParams(window.location.search);
+		const paramTheme = params.get('theme');
+		const saved = localStorage.getItem('theme');
+		if(paramTheme === 'dark' || (!paramTheme && saved === 'dark')){
+			root.classList.add('dark');
+		}
+
+		// small transition helper so colors animate
+		function flashTheme(){
+			document.documentElement.classList.add('theme-transition');
+			window.setTimeout(()=>{ document.documentElement.classList.remove('theme-transition'); }, 400);
+		}
+
+		function updateToggleAria(){
+			toggle.setAttribute('aria-pressed', root.classList.contains('dark'));
+		}
+		updateToggleAria();
+		toggle.addEventListener('click', ()=>{
+			flashTheme();
+			root.classList.toggle('dark');
+			localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+			updateToggleAria();
+		});
 
 					// Resume generator using jsPDF (UMD import)
 					const { jsPDF } = window.jspdf;
@@ -388,6 +403,24 @@
 							generateResumePDF();
 						});
 					}
+
+					// Copy to clipboard for preview contact
+					const copyEmail = document.getElementById('copyEmail');
+					const copyPhone = document.getElementById('copyPhone');
+					if(copyEmail){
+						copyEmail.addEventListener('click', async ()=>{
+							const text = document.getElementById('previewEmail').textContent.trim();
+							try{ await navigator.clipboard.writeText(text); copyEmail.textContent='Copied'; setTimeout(()=>copyEmail.textContent='Copy',1200);}catch(e){copyEmail.textContent='Err';}
+						});
+					}
+					if(copyPhone){
+						copyPhone.addEventListener('click', async ()=>{
+							const text = document.getElementById('previewPhone').textContent.trim();
+							try{ await navigator.clipboard.writeText(text); copyPhone.textContent='Copied'; setTimeout(()=>copyPhone.textContent='Copy',1200);}catch(e){copyPhone.textContent='Err';}
+						});
+					}
+
+                    
 		})();
 		</script>
 	</body>
